@@ -1,3 +1,29 @@
+bir proje geliþtirirken en önemli noktalardan biri veritabanýdýr. 
+
+projeler artýk tek bir uygulama üzerinden gitmez. örneðin bir projenin web, mobil, konsol gibi örnekleri vardýr.
+
+kodlama yapýlýrken iki tür kodlama vardýr: 
+1)data access: veriye eriþim saðladýðýmýz kodlama katmanýdýr. bu katmanda sadece SQL(bu excel tablosu veya metinde olabilir) çalýþýr.
+neden peki böyle bir katmana ihtiyacýmýz var?
+veriye eriþmek için farklý tekniklere ihtiyaç vardýr(x,y,z gibi). ilerleyen zamanlarda kodun bir kýsmýný farklý bir teknikle yazmak 
+veya deðiþtirmek istersek diðer katmanlar bundan etkilenmez.
+
+2)business: iþ kodlarýnýn yazýldýðý katmandýr. projenin kurallarýný yazdýðýmýz yerdir.
+
+bu iki kodlama katmanýný tamamladýktan sonra bir proje geliþtirebiliriz.
+örneðin bir web uygulamasý geliþtirebiliriz. bu kýsmada user interface(kullanýcý arayüzü) denir. 
+
+bunun dýþýnda biz bir android veya ios uygulamasý geliþtirebiliriz. fakat business katmaný ile bunlarý direkt görüþtüremezsin. 
+bu yüzden farklý sistemlerin birbirinin anlayabilmesi için bir teknoloji kullanýrýz(bu bir standarttýr: restful, json). 
+service adýnda bir katman daha yazarýz ya da günümüzde çok kullanýlan API dediðimiz altyapý kullanýlýr.
+business ve ona baðlý data access katmaný API katmaný vasýtatsýyla dýþ dünyaya açýlýr ve baðlantý saðlanýr.
+
+-------------------------------------------------------------------------------------------------------------
+
+bundan sonra visual studio'da bir proje oluþtururken blank solution ile oluþtururuz.
+   
+---------------------------------------------------------------------------------------------------------
+
 abstract klasörüne soyut nesneleri: interface, abstractlar, base sýnýflarý buraya ekleriz
 referans tutucular buraya eklenir
 abstract ile uygulamalar arasýndaki baðýmlýlýklarý minimize ederiz
