@@ -36,4 +36,4 @@ concrete klasörüne ise somut nesneleri yani gerçek iþi yapan classlarý ekleriz
 o yüzden bunu bi standart haline getir.
 
 eðer alternatif teknolojisi olan bir ortamý kodluyorsunuz orada klasörleme tekniðine gidilir(örn DataAccess).
-
+ 
