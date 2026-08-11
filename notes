@@ -22,7 +22,7 @@ business ve ona baðlý data access katmaný API katmaný vasýtatsýyla dýþ dünyaya a
 
 bundan sonra visual studio'da bir proje oluþtururken blank solution ile oluþtururuz.
    
----------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 
 abstract klasörüne soyut nesneleri: interface, abstractlar, base sýnýflarý buraya ekleriz
 referans tutucular buraya eklenir
@@ -30,9 +30,27 @@ abstract ile uygulamalar arasýndaki baðýmlýlýklarý minimize ederiz
 
 concrete klasörüne ise somut nesneleri yani gerçek iþi yapan classlarý ekleriz
 
----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 
 önce abstract'tan interface oluþtur. bu interface belki þimdi iþine yaramaz ama 5 yýl sonra iþine yarayacaktýr
 o yüzden bunu bi standart haline getir.
 
 eðer alternatif teknolojisi olan bir ortamý kodluyorsunuz orada klasörleme tekniðine gidilir(örn DataAccess).
+
+-------------------------------------------------------------------------------------------------------------
+
+entity framwork microsoft'un orm dediðimiz bir ürünüdür. LINQ destekli çalýþýr. orm demek veritabanýndaki tabloyu sanki classmýþ 
+gibi iliþkendirip bundan böyle bütün operasyonlarý LINQ ile yaptýðýmýz bir ortam. orm veritabaný nesneleriyle kodlar arasýnda bir 
+iliþki kurup veritabaný iþlerini yapar.
+
+entity framework sisteme nasýl dahil edilir?
+NuGet: baþkalarýnýn yazdýðý kodlarý, paketleri kullandýðýmýz ortak yerdir.
+DataAccess > Manage NuGet Packets > entityframeworkcore.sql 'i kur.
+þimdi ise veritabanýndaki Category tablosu ile bizim Category'i, veritabanýndaki Customer tablosu ile bizim Customer'ý vs. 
+iliþkilendirmem gerekiyor.
+
+-------------------------------------------------------------------------------------------------------------
+
+son olarak Program.cs'e gelip InMemoryProductDal'ý EfProductDal ile deðiþtirip çalýþtýrdýk ve baþka hiçbir deðiþiklik yapmadan
+uygulama çalýþtý. sonuç olarak ürünlerin adýný verdi.
+(InMemoryProductDal'da biz kendimiz ürünleri yazdýk, EfProductDal'da ise verileri database'den çektik ki olmasý gereken budur)
