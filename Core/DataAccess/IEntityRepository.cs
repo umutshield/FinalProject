@@ -1,5 +1,4 @@
-﻿using Entities.Abstract;
-using Entities.Concrete;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -8,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Abstract
+namespace Core.DataAccess
 {
     //Bu interface'i neden oluşturduk: Product ve Category interfacelerindeki metotları tek tek yazmamak için oluşturduk
     //bu örnekte Product ve Category entityleri oluşturduk ama büyük bir projeyi düşün çok fazla entity var o zaman ne yapacağız?

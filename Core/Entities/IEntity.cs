@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 //IEntity implement eden class bir veritabanı tablosudur
 
-namespace Entities.Abstract
+namespace Core.Entities
 {
     public interface IEntity
     {

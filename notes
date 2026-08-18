@@ -40,7 +40,7 @@ eğer alternatif teknolojisi olan bir ortamı kodluyorsunuz orada klasörleme tekni
 -------------------------------------------------------------------------------------------------------------
 
 entity framwork microsoft'un orm dediğimiz bir ürünüdür. LINQ destekli çalışır. orm demek veritabanındaki tabloyu sanki classmış 
-gibi ilişkendirip bundan böyle bütün operasyonları LINQ ile yaptığımız bir ortam. orm veritabanı nesneleriyle kodlar arasında bir 
+gibi ilişkilendirip bundan böyle bütün operasyonları LINQ ile yaptığımız bir ortam. orm, veritabanı nesneleriyle kodlar arasında bir 
 ilişki kurup veritabanı işlerini yapar.
 
 entity framework sisteme nasıl dahil edilir?
@@ -54,3 +54,17 @@ ilişkilendirmem gerekiyor.
 son olarak Program.cs'e gelip InMemoryProductDal'ı EfProductDal ile değiştirip çalıştırdık ve başka hiçbir değişiklik yapmadan
 uygulama çalıştı. sonuç olarak ürünlerin adını verdi.
 (InMemoryProductDal'da biz kendimiz ürünleri yazdık, EfProductDal'da ise verileri database'den çektik ki olması gereken budur)
+
+-------------------------------------------------------------------------------------------------------------
+
+core katmanı: core katmanı senin oluşturacağın sistemden bağımsız olarak bir altyapı katmanı oluşturur. 
+bu katmana ortak kodlar yazıp birçok projede kullanabilirsin.
+güvenlik teknikleri, araçlar, performans yönetimleri, loglama vs. burada olur. 
+gerçek hayatta altyapı ekibi sistemler için burada altyapılar yazar ve bütün projelerde bu altyapıyı kullanırki herkes kafasına 
+göre kod yazmasın.
+
+hangi katmanla ilgileneceksek o katmanla ilgili klasör oluşturulur ve o katmana hizmet edecek kodlar o klasöre koyulur.
+
+!! core katmanı diğer katmanları referans almaz. eğer alırsa o katmana bağımlı bir hale gelir bu da core katmanının tanımını bozar.
+DataAccess ve Entities katmanından Core katmanına referans vermeyi unutma. (DataAccess > Add > Project Reference > Core)
+dikkat edersen diğer katmanlar referans aldı, core katmanı referans almadı.
