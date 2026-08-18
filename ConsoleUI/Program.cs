@@ -12,9 +12,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //ProductTest();
-
-            CategoryTest();
+            ProductTest();
+            //CategoryTest();
         }
 
         private static void CategoryTest()
@@ -33,9 +32,9 @@ namespace ConsoleUI
             //productManager.GetAll()  bundan sonra buraya neyin yazmasını istiyorsak yazabiliriz.
             //örn: productManager.GetAllByCategoryId(2) yazarsak kategori id'si 2 olan ürünleri yazdıracak.
 
-            foreach (var product in productManager.GetByUnitPrice(50, 100))
+            foreach (var product in productManager.GetProductDetails())
             {
-                Console.WriteLine(product.ProductName);
+                Console.WriteLine(product.ProductName + "/" + product.CategoryName);
             }
         }
     }

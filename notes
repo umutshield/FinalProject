@@ -77,3 +77,9 @@ yeni bir entity eklemek bu sistemde artýk çok basit:
 3-DataAccess > Concrete > EntityFramework klasöründe bir ef oluþtur ve bununda base *sýnýflarýný yaz
 4-DataAccess > Concrete > EntityFramework > NorthwindContext'te yeni oluþturduðun entity ile veritabanýndaki entity'i eþleþtir
 ve bitti bu kadar.
+
+-------------------------------------------------------------------------------------------------------------
+
+DTO: Data Transformation Object, taþýyacaðýmýz objeler
+Sql'deki join iþlemine karþýlýk gelir.
+yani dto dediðimiz þey birden fazla tablodaki satýrlarýn birleþimidir.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//IEntity implement eden class bir veritabanı tablosudur
+//IEntity'i implement eden class bir veritabanı tablosudur
 
 namespace Core.Entities
 {
