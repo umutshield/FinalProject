@@ -12,12 +12,28 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            ProductManager productManager  = new ProductManager(new EfProductDal());
+            //ProductTest();
+
+            CategoryTest();
+        }
+
+        private static void CategoryTest()
+        {
+            CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+            foreach (var category in categoryManager.GetAll())
+            {
+                Console.WriteLine(category.CategoryName);
+            }
+        }
+
+        private static void ProductTest()
+        {
+            ProductManager productManager = new ProductManager(new EfProductDal());
 
             //productManager.GetAll()  bundan sonra buraya neyin yazmasını istiyorsak yazabiliriz.
             //örn: productManager.GetAllByCategoryId(2) yazarsak kategori id'si 2 olan ürünleri yazdıracak.
 
-            foreach (var product in productManager.GetByUnitPrice(50,100))    
+            foreach (var product in productManager.GetByUnitPrice(50, 100))
             {
                 Console.WriteLine(product.ProductName);
             }

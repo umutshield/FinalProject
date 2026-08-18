@@ -10,8 +10,12 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
+    //Manager, iş kodlarının yazıldığı yerdir
     public class ProductManager : IProductService
     {
+        //IProductDal'ı yazma nedenimiz business katmanı dataaccess'e bağlı olduğu için yarın öbürgün entityframework
+        //yerine başka bir şey kullanırsak o oracle'a olan bağımlılığımızı minimize etmektir.
+
         IProductDal _productDal;
 
         public ProductManager(IProductDal productDal)

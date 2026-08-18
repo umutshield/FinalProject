@@ -24,11 +24,10 @@ bundan sonra visual studio'da bir proje oluþtururken blank solution ile oluþturu
    
 -------------------------------------------------------------------------------------------------------------
 
-abstract klasörüne soyut nesneleri: interface, abstractlar, base sýnýflarý buraya ekleriz
-referans tutucular buraya eklenir
-abstract ile uygulamalar arasýndaki baðýmlýlýklarý minimize ederiz
+abstract klasörüne soyut nesneleri: interface, abstractlar, base sýnýflarý buraya ekleriz (referans tutucular buraya eklenir). 
+abstract ile uygulamalar arasýndaki baðýmlýlýklarý minimize ederiz.
 
-concrete klasörüne ise somut nesneleri yani gerçek iþi yapan classlarý ekleriz
+concrete klasörüne ise somut nesneleri yani gerçek iþi yapan classlarý ekleriz.
 
 -------------------------------------------------------------------------------------------------------------
 
@@ -68,3 +67,13 @@ hangi katmanla ilgileneceksek o katmanla ilgili klasör oluþturulur ve o katmana 
 !! core katmaný diðer katmanlarý referans almaz. eðer alýrsa o katmana baðýmlý bir hale gelir bu da core katmanýnýn tanýmýný bozar.
 DataAccess ve Entities katmanýndan Core katmanýna referans vermeyi unutma. (DataAccess > Add > Project Reference > Core)
 dikkat edersen diðer katmanlar referans aldý, core katmaný referans almadý.
+core katmanýna manage nuget packages'dan sql server'ý yükle.
+
+-------------------------------------------------------------------------------------------------------------
+
+yeni bir entity eklemek bu sistemde artýk çok basit:
+1-Entities'te Concrete klasörüne bir entity ekle
+2-DataAccess'te Abstract klasöründe bu entity'e ait bir interface ekle ve base sýnýfýný yaz
+3-DataAccess > Concrete > EntityFramework klasöründe bir ef oluþtur ve bununda base *sýnýflarýný yaz
+4-DataAccess > Concrete > EntityFramework > NorthwindContext'te yeni oluþturduðun entity ile veritabanýndaki entity'i eþleþtir
+ve bitti bu kadar.
