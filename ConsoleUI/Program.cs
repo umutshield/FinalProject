@@ -29,13 +29,21 @@ namespace ConsoleUI
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
 
-            //productManager.GetAll()  bundan sonra buraya neyin yazmasını istiyorsak yazabiliriz.
-            //örn: productManager.GetAllByCategoryId(2) yazarsak kategori id'si 2 olan ürünleri yazdıracak.
+            var result = productManager.GetProductDetails();
 
-            foreach (var product in productManager.GetProductDetails())
+            if (result.Success == true)
             {
-                Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                foreach (var product in result.Data)
+                {
+                    Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                }
             }
+
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
         }
     }
 } 
