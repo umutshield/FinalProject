@@ -60,7 +60,7 @@ namespace Core.DataAccess.EntityFramework
                     : context.Set<TEntity>().Where(filter).ToList();
 
                 //filtre null ise tümünü getir değilse --iki noktadan sonrası-- filtreleyip ver.
-                //context.Set<Product> şu anlama gelir: ben Product tablosuyla çalışacağım.
+                //context.Set<TEntity> şu anlama gelir: ben Product tablosuyla çalışacağım.
                 //ToList() ise bu tabloyu listeye çevir ve (filtre varsa filtrele) bana ver demektir.
                 //yani kısaca bu satır arka planda SELECET * from Product'ı döndürür.
             }

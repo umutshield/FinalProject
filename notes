@@ -9,6 +9,7 @@ veriye erişmek için farklı tekniklere ihtiyaç vardır(x,y,z gibi). ilerleyen zama
 veya değiştirmek istersek diğer katmanlar bundan etkilenmez.
 
 2)business: iş kodlarının yazıldığı katmandır. projenin kurallarını yazdığımız yerdir.
+Bu katman, veriyi DataAccess'e göndermeden önce projenin iş kurallarını denetleyen yerdir.
 
 bu iki kodlama katmanını tamamladıktan sonra bir proje geliştirebiliriz.
 örneğin bir web uygulaması geliştirebiliriz. bu kısmada user interface(kullanıcı arayüzü) denir. 
@@ -83,3 +84,20 @@ ve bitti bu kadar.
 DTO: Data Transformation Object, taşıyacağımız objeler
 Sql'deki join işlemine karşılık gelir.
 yani dto dediğimiz şey birden fazla tablodaki satırların birleşimidir.
+
+-------------------------------------------------------------------------------------------------------------
+
+!!! sisteme bir ürün eklemeden önce uygulanması gereken kurallar varsa bu kontroller Business katmanına yazılır ve eğer her şey bu 
+kurallardan başarıyla geçerse ekleme işlemi ancak o zaman gerçekleşir. 
+Özetle; Business katmanındaki Add metodu veritabanına kayıt atmak için değil, kayıt atılmadan önceki bekçi görevini görmek için 
+yazılır. Kurallardan geçen temiz veri, en son adımda DataAccess'in Add metoduna teslim edilir.
+
+ilk notlarda demiştimki business katmanı ile kullanıcı (dış dünya) arasında bağlantı kurabilmek için Web API'a ihtiyacımız vardır.
+örneğin bir ios, android, angular veya react ile iletişim kurmak için web api şarttır. çünkü c# kodlarını bu uygulamalar algılayamaz
+(console algılayabilir çünkü .net projesidir). 
+.net projelerinde web api ile iletişim sağlanır.
+bu iletişimde restful dediğimiz json formatını kullanırız.
+
+-------------------------------------------------------------------------------------------------------------
+
+northwind'e özel proje sabitleri business > constants klasörüne yazılır
