@@ -14,9 +14,10 @@ namespace Business.Concrete
     {
         ICategoryDal _categoryDal;
 
-        //_categoryDal'ı constructor injection yaptık ve alttaki kod oluştu.
-        //alttaki kod için bu şu demek: ben CategoryManager olarak veri erişim katmanına bağımlıyım ama biraz zayıf bağımlıyım 
-        //çünkü ben interface/referance üzerinden bağımlıyım bu yüzden sen DataAccess'te istediğin işlemi yap ama kurallarıma uy.
+        /* _categoryDal'ı constructor injection yaptık ve alttaki kod oluştu.
+        alttaki kod için bu şu demek: ben CategoryManager olarak veri erişim katmanına bağımlıyım ama biraz zayıf bağımlıyım 
+        çünkü ben interface/referance üzerinden bağımlıyım bu yüzden sen DataAccess'te istediğin işlemi yap ama kurallarıma uy. 
+        yani özetle diyorki ben entityframework ya da başka bir şeye bağımlı değilim. */
         public CategoryManager(ICategoryDal categoryDal)
         {
             _categoryDal = categoryDal;

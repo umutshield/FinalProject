@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    //EfEntityRepositoryBase, IProductDal'ın istediği tüm metotları/operasyonları gerçekleştirir.
-    //bu yüzden onları yan yana yazdık.
-    //şu anda EfProductDal'da bütün veritabanı operasyonları hazırdır.
+    /* EfEntityRepositoryBase, IProductDal'ın istediği tüm metotları/operasyonları gerçekleştirir.
+    bu yüzden onları yan yana yazdık.
+    şu anda EfProductDal'da bütün veritabanı operasyonları hazırdır.
 
-    //peki şu an IProductDal'a neden ihtiyacımız var hala?
-    //1-Business katmanı hala IProductDal'ı kullanır çünkü yarın entityframework yerine başka bir oracle kullanırsak
-    //projenin hata almaması için.
-    //2-IProductDal'da ürüne ait özel operasyonlar yazılır (örn. ürünün detaylarını getir).
+    peki şu an IProductDal'a neden ihtiyacımız var hala?
+    1-Business katmanı hala IProductDal'ı kullanır çünkü yarın entityframework yerine başka bir oracle kullanırsak
+    projenin hata almaması için.
+    2-IProductDal'da ürüne ait özel operasyonlar yazılır (örn. ürünün detaylarını getir).
 
-    //aynı mantık ICategoryDal ve diğer entityler içinde geçerlidir.
+    aynı mantık ICategoryDal ve diğer entityler içinde geçerlidir. */
     public class EfProductDal : EfEntityRepositoryBase<Product, NorthwindContext>, IProductDal
     {
         public List<ProductDetailDto> GetProductDetails()
@@ -38,9 +38,9 @@ namespace DataAccess.Concrete.EntityFramework
                              };
                 return result.ToList();
             }
-            //var result sonuç demek. Ürünler(p) ile kategorileri(c) join ettik.
-            //neye göre 'on' a göre, yani CategoryId'leri eşitle.
-            //sonucu select ile şu kolonlara uydurarak yaz. süslü parantez içini de alanları yaz, neyi nerden getirdik.
+            /* var result sonuç demek. Ürünler(p) ile kategorileri(c) join ettik.
+            neye göre 'on' a göre, yani CategoryId'leri eşitle.
+            sonucu select ile şu kolonlara uydurarak yaz. süslü parantez içini de alanları yaz, neyi nerden getirdik. */
         }
     }
 }

@@ -40,8 +40,10 @@ eðer alternatif teknolojisi olan bir ortamý kodluyorsunuz orada klasörleme tekni
 -------------------------------------------------------------------------------------------------------------
 
 entity framwork microsoft'un orm dediðimiz bir ürünüdür. LINQ destekli çalýþýr. orm demek veritabanýndaki tabloyu sanki classmýþ 
-gibi iliþkilendirip bundan böyle bütün operasyonlarý LINQ ile yaptýðýmýz bir ortam. orm, veritabaný nesneleriyle kodlar arasýnda bir 
-iliþki kurup veritabaný iþlerini yapar.
+gibi iliþkilendirip bundan böyle bütün operasyonlarý LINQ ile yaptýðýmýz bir ortam. 
+orm, veritabaný nesneleriyle kodlar arasýnda bir iliþki kurup veritabaný iþlerini yapar.
+LINQ ile liste bazlý yapýlarý filtreleyebiliyoruz.
+LINQ kullanýmý = InMemoryProducDal.cs
 
 entity framework sisteme nasýl dahil edilir?
 NuGet: baþkalarýnýn yazdýðý kodlarý, paketleri kullandýðýmýz ortak yerdir.

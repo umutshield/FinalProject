@@ -30,7 +30,7 @@ namespace Business.Concrete
                                              bu olayın sonucunun bize verildiğini nasıl yazarız? encapsulation ile. çünkü void
                                              tek bir metod döndürür ikinciyi döndürmez bunu önlemek içinde kapsülleme yapacağız. */
         {
-            if(product.ProductName.Length < 2)
+            if(product.ProductName.Length < 2)       //isim uzunluğu, birim fiyatı gibi kurallar CRUD metotlara yazılır.
             {
                 //returndan önce buraya iş kodları yazılır
                 //magic strings: stringleri ayrı ayrı yazmak (Messages classı oluşturduk)

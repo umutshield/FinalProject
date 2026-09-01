@@ -12,8 +12,10 @@ namespace DataAccess.Concrete.InMemory
 {
     public class InMemoryProductDal : IProductDal
     {
-        List<Product> _products;   //bu nesne class'ın içinde ve metodların dışında tanımlandığında o class için
-                                   //bu tip değişkenlere global değişken denir. alt çizgi ile gösterilir.
+        List<Product> _products;   /* bu nesne class'ın içinde ve metodların dışında tanımlandığında o class için
+                                   bu tip değişkenlere global değişken denir. alt çizgi ile gösterilir. 
+                                   mantığı şu: InMemoryProductDal bu nesneyi kullanır ama metotlar kullanamaz çünkü
+                                   metotların dışında bu nesne. metotların da kullanabilmesi için alias'ın başına alt çizgi koyarız.*/
         public InMemoryProductDal()   //ctor yaz taba bas constructor oluşturur. 
         {
             //gerçek hayatta bu veriler bir Oracle,Sql server, Postgres, MongoDb gibi veritabanlarından alınır
@@ -37,29 +39,30 @@ namespace DataAccess.Concrete.InMemory
 
         public void Delete(Product product)
         {
-            //Product productToDelete = null;
+            /* Product productToDelete = null;
 
-            //foreach (var p in _products)        //LINQ olmasaydı böyle bir döngü kuracaktık
-            //{
-            //    if (product.ProductId == p.ProductId)
-            //    {
-            //        productToDelete = p;
-            //    }
-            //}
+            foreach (var p in _products)        //LINQ olmasaydı böyle bir döngü kuracaktık
+            {
+                if (product.ProductId == p.ProductId)
+                {
+                    productToDelete = p;
+                }
+            }
 
-            //LINQ - Language Integrated Query - Dile Gömülü Sorgu
-            //eğerki LINQ olmasaydı biz bir ürünü silmek için listeyi tek tek dolaşıp bir şart koyacaktık.
-            //LINQ ile liste bazlı yapıları aynı SQL gibi filtreleyebiliyoruz.
+            LINQ - Language Integrated Query - Dile Gömülü Sorgu
+            eğerki LINQ olmasaydı biz bir ürünü silmek için listeyi tek tek dolaşıp bir şart koyacaktık.
+            LINQ ile liste bazlı yapıları aynı SQL gibi filtreleyebiliyoruz. */
 
-            Product productToDelete = _products.SingleOrDefault(p=> p.ProductId == product.ProductId);
+            Product productToDelete = _products.SingleOrDefault(p => p.ProductId == product.ProductId);
 
-            //SingleOrDefault() tek bir eleman bulmaya yarar, bizim için _products'ı tek tek dolaşır.
-            //SingleOrDefault(p=>) dediğimiz kısım aslında foreach (var p in _products) kısmıdır.
-            //SingleOrDefault'ın tamamı ise foreach döngüsünün tamamıdır.
-            //SingleOrDefault yerine FirstOrDefault veya First'te kullanılabilir.
+            /*
+            SingleOrDefault() tek bir eleman bulmaya yarar, bizim için _products'ı tek tek dolaşır.
+            SingleOrDefault(p=>) dediğimiz kısım aslında foreach (var p in _products) kısmıdır.
+            SingleOrDefault'ın tamamı ise foreach döngüsünün tamamıdır.
+            SingleOrDefault yerine FirstOrDefault veya First'te kullanılabilir. */
 
 
-            _products.Remove(productToDelete);    //bu kod ile listeden bir şey silinmez, neden peki? product referans tipli olduğu için
+            _products.Remove(productToDelete);    //bu kod ile listeden bir şey silinmez, neden peki? Product referans tipli olduğu için
                                                  //nasıl sileceğiz peki? id'leri kullanarak ve bunu LINQ ile yaparız.
         }
 

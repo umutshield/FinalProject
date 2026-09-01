@@ -13,11 +13,11 @@ namespace DataAccess.Concrete.EntityFramework
     public class NorthwindContext:DbContext
     {
         //veritabanı erişme
-        //override on metodu projenin hangi veritabanıyla ilgili olduğunu gösterir
+        //override on yaz taba bas. bu metod projenin hangi veritabanıyla ilgili olduğunu gösterir
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Northwind;Trusted_Connection=true");    
-            //gerçek hayatta Server'a bir ip adresi girilir
+            //gerçek hayatta Server kısmına bir ip adresi girilir
 
         }
 
