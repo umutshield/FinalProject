@@ -39,7 +39,7 @@ namespace Business.Concrete
 
             _productDal.Add(product);
 
-            return new SuccessResult(Messages.ProductAdded);  /*eğer bu şekilde yazmasaydık Resul resul = new Result()   result.bir şeyler
+            return new SuccessResult(Messages.ProductAdded);  /* eğer bu şekilde yazmasaydık Result result = new Result()   result.bir şeyler
                                                               vs. yazacaktık ama constructor ile bu parametreleri direkt yazabiliriz.
                                                               başarı dönüşümlerini constructor ile kodladık(constructor, result sekmesinde) */
         }

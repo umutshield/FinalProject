@@ -100,6 +100,20 @@ ilk notlarda demiþtimki business katmaný ile kullanýcý (dýþ dünya) arasýnda baðl
 .net projelerinde web api ile iletiþim saðlanýr.
 bu iletiþimde restful dediðimiz json formatýný kullanýrýz.
 
+northwind'e özel proje sabitleri business > constants klasörüne yazýlýr
+
 -------------------------------------------------------------------------------------------------------------
 
-northwind'e özel proje sabitleri business > constants klasörüne yazýlýr
+web api (asp.net)
+asp.net microsoft'un web geliþtirme ortamýnýn olduðu yapýdýr.
+asp.net .net projelerinde web projelerine verilen isimdir.
+web api'da Controllers, gelen tüm istekleri(örn Iproductserviceteki metotlarý birer istek haline getireceðiz. yani mantýk þu  
+kullanýcý ürünleri kategorilerine göre sýralamak isterse buraya bir istek yollar) karþýlar. peki bu istek nasýl olur?  
+restful ile. burada bu clientlarýn hangi operasyonlar için ve nasýl istekte bulunabilirliðinin kodlamalarýný yaparýz.
+
+manager kodlarýda deðiþebilir. ileride özel bir kurum veya müþteriye özel bir manager kodlarý yazabilirsin. bu yüzden bir katman diðer 
+katmanýn somut classlarý ile baðlantý kurmaz. katmanlar arasýnda soyut sýnýflar ile baðlantý saðlanýr.
+! iyi bir geliþtirici proje kodlarken ileride karþýsýna ne çýkacaðýna bilmeyen ama biliyormuþ gibi kodlama yapan kiþidir. 
+bunu da SOLID prensipleri ile gerçekleþtirir.
+
+ 
