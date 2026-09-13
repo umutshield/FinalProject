@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         IoC Container -- Inversion of Control -- Değişimin kontrolü
         IoC dediğimiz şeyi bir kutu gibi düşünebilirsin. biz bu kutunun içine new ProductManager, new EfProdutDal gibi
         sonradan kullanacağımız referansları atıp ihtiyaç durumlarında kullanırız. 
-        Program.cs>AddControllers'ın altına IoC kodlarımızı yazarıız. */
+        Program.cs>AddControllers'ın altına IoC kodlarımızı yazarız. */
 
         IProductService _productService;
         public ProductsController(IProductService productService)

@@ -116,4 +116,88 @@ katmanýn somut classlarý ile baðlantý kurmaz. katmanlar arasýnda soyut sýnýflar 
 ! iyi bir geliþtirici proje kodlarken ileride karþýsýna ne çýkacaðýna bilmeyen ama biliyormuþ gibi kodlama yapan kiþidir. 
 bunu da SOLID prensipleri ile gerçekleþtirir.
 
- 
+-------------------------------------------------------------------------------------------------------------
+
+AOP mimarisi
+autofac ne iþe yarar. örneðin sen bir metotta loglama, performans, doðrulama, hata gibi iþlemleri AOP ile yaparsýn. 
+bu yüzden Autofac gibi AOP imkaný sunan ürünleri IoC Container yerine kullanýrýz.
+Business'a autofac ve autofac.extra paketlerini yükle.
+
+business ve validation kodlarý ayrýdýr. 
+doðrulama kodu, bir nesnenin yapýsal uyumuyla alakalý olan kurallar doðrulama kodudur. örn bir ürün ekleyince min,max karakter gibi.
+iþ kuralý ise bizim iþ ihtiyaçlarýmýz uygunluktur. iþ kurallarýný kontrol eden yerdir. örn bir kiþiye kredi verirken o kiþinin krediye 
+uygun olup olmadýðýnýn kontrol edilmesi.
+Business'a fluentvalidation paketini ekle.
+(ctrl+k  ctrl+d  ile kodlarýný düzene sokarsýn)
+
+cross cutting concerns -- uygulamayý dikine kesen ilgi alanlarý (Core)
+yani tüm katmanlarda ortak olarak kullandýðýmýz eylemlerdir. 
+örneðin log, cache, validation, transaction(performans yönetimi), authorization(yetkilendirme) bunlara örnektir.
+
+attributelar field, class, property, metotlara anlam yüklemek için kullanýlan yapýlardýr.
+örneðin bir Add iþleminden önce yazdýðýn [Log] atribute'ý ekleyeceðin nesneyi eklemeden önce loglama kurallarýna bakar ya da 
+[Validate] iþlemi ekleme iþleminden önce doðrulama kurallarýný gözden geçirir ondan sonra ekleme yapar.
+yani burada bir nevi aop yapýsýný kullanýyoruz.
+solution>manage nuget packages for solution>Installed kýsmýndan üç tane autofac'i core katmanýna yükle.
+
+Interceptor, araya girmek demektir. Metotun baþýnda, sonunda, hata verdiðinde çalýþmaktýr.
+virtual metod, senin onu ezmeni bekleyen metot demektir. biz bir aspect yazdýðýmýz zaman o aspect nerede çalýþsýn istiyorsak gidip 
+onun ilgili metotlarýný eziyoruz. aspect dediðimiz þey bir operasyondur.
+
+iþ kurallarýný teker teker crud ve diðer operasyonlarýn içine yazarsan dont repeat yourself felsefesine ters düþersin. çok fazla kod
+karmaþýklýðý oluþur.
+bir iþ kuralý parçasý nasýl yazýlýr?
+ProductManager'da kodlarýn en altýna bir iþ kuralý parçacýðý yazýlýr. (CheckIfProductCountOfCategoryCorrect)
+biz bunu bir kez yazarýz ve add, update gibi tüm operasyonlarda kullanýrýz.
+fakat bu kod parçaðý da çok karýþýk olduðu için Core katmanýnda Business klasörü ve BusinessRuless adýnda bir class oluþturup oraya
+iþ parçacýklarýmýzý daha rahat kullanabileceðim kodu yazarýz.
+
+bir EntityManager kendisi hariç baþka bir entity'i enjekte edemez. (IProductDal _productDal; örnekleri)
+bunun yerine baþka bir entity'nin servisini enjekte edebiliriz. (IProductService _productService)
+
+-------------------------------------------------------------------------------------------------------------
+
+JWT - json web token -- güvenlik mimarisi
+Claim -- yetki. örneðin bir kullanýcýnýn admin gibi claimlere sahip olmasý
+Yetkilendirme projeden projeye farklýlýk gösterir. Kimi projelerde admin, moderatör, kullanýcý gibi yetkiler vardýr kiminde daha
+fazladýr.
+mantýk þöyle iþler: client(istemci, bu bir tarayýcý, web-mobil uygulama olabilir) api'a bir istek yollar. eðer bir client'ýn bir 
+tokený/yetkilendirmesi yoksa api olumsuz bir yanýt verir. sonrasýnda bu client bir email ve parola ile bir token ister. email ve 
+parola doðrulanmýþsa api client'a bir token(jwt) verir. client bu token'ý hafýzasýnda tutar. client bundan sonra bütün isteklerini 
+yaparken(örn ürün ekleme) http istek zarfý ile gönderir ve bu zarfýn içerisinde jwt bulunur. api bu jwt'a bakar ve veritabanýndan
+kontrol eder. eðer bu tokenýn bu iþlemi yapmaya yetkisi varsa olumlu yoksa olumsuz cevap gönderir. 
+(json dediðimiz þey formatlý metindir)
+
+bir datayý karþý tarafýn okumamasý için yapýlan çalýþmalar -- encyrpt,hash,salt
+
+Encryption -
+geri dönüþü olan veridir. bizim datamýz encrypt edilir. ayný zamanda dencrypt ile bu þifreyi de çözebiliriz. peki biz bu þifrelemeyi 
+nasýl yaptýk? Key(anahtar) ile. 
+
+Hashing -
+kullanýcý parolalarýný veritabanýnda açýk tutmak yerine hashleriz yani bir yerde tutarýz. hashlemek, parolayý MD5, SHA1 gibi
+þifreleme algoritmalarýyla oluþturulan þifrelere dönüþtürür. 
+örneðin kullanýcý sisteme email ve parolasýný girdi. sistem veritabanýndan bu emaile sahip kullanýcýnýn parolasý ile girdiði parolayý
+hash karþýlaþtýrmasý yaparak doðrulamaya çalýþýr. 
+hashte veriyi hashlemiyoruz. o algoritmaya göre bir data oluþturuyoruz. 
+
+Salting -
+kullanýcýnýn girdiði parolasýna ek olarak bizim de bazý karakterler ekleyerek parolayý hashlemektir.
+buradaki amaç verinin güvenliðini saðlamaktýr. çünkü kullanýcýnýn girdiði þifreler basit olabilir.
+
+-------------------------------------------------------------------------------------------------------------
+
+3 tane tablo ekledik(Users and OperationClaims and UserOperationClaims)
+bu tablolarýn entitylerini oluþturduk ama core katmanýnda. çünkü bu entityler'i tüm projelerinde kullanabilirsin.
+
+Cache -
+herhangi bir kullanýcý daha önceden yazdýðýmýz metodlardan(GetAll) birini kullanmýþsa ve bundan sonraki herhangi bir kullanýcý bu metodu
+kullanmak isterse bir daha veritabanýna gitmeye gerek yok fakat burada datanýn deðiþmemiþ olmasý lazým. 
+örneðin 5 id nolu kategorideki ürünleri listeden diyelim. sonrasýnda bir kullanýcý da bu ürünleri listelemek isterse veritabanýndan deðil
+cache'den bu ürünleri çeker.
+cache olayýný biz microsoftun kendi içinde olan cache mekanizmasýný kullanacaðýz. buna inmemorycache denir. yapýlan istekler, cachlenmek 
+istenen þeyler bellekte tutulur(bu bellek bizim serverdaki belleðimiz).  
+cache'e istediðimiz kadar süre verebiliriz.
+bir ürün eklendiðinde veya güncellendiðinde cache silinir.
+cachlemek istediðimiz datayý key,value pair ile tutulur. key cache verdiðimiz isimdir. parametreli metotlarda ise value kullanýlýr.
+çok sýk kullanýlan metotlarda [CacheAspect] kullanýlýr.

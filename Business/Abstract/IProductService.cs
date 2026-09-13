@@ -23,6 +23,8 @@ namespace Business.Abstract
                                          ürünün fiyatı 0 tlden büyük mü veya sisteme daha önceden kayıtlı mı. ProductManager'da
                                          sürekli yazdığımız iş kodları işte bu sorgulardır. eğer ürün business katmanından onay
                                          alırsa DataAccess'e yollanır ve oradan veritabanına Add edilir. (void > IResult) */
-        
+
+        IResult Update(Product product);
+        IResult AddTransactionalTest(Product product);
     }
 }

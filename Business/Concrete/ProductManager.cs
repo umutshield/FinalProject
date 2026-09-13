@@ -1,10 +1,19 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,30 +29,48 @@ namespace Business.Concrete
         yerine başka bir şey kullanırsak o oracle'a olan bağımlılığımızı minimize etmektir. */
 
         IProductDal _productDal;
+        ICategoryService _categoryService;    //product dışında başka bir entity'nin dal'ı buraya enjekte edilemez ama service'i enjekte edilebilir
 
-        public ProductManager(IProductDal productDal)
+        public ProductManager(IProductDal productDal, ICategoryService categoryService)
         {
             _productDal = productDal;
+            _categoryService = categoryService;
         }
 
+
+        [SecuredOperation("product.add, admin")]
+        [ValidationAspect(typeof(ProductValidator))]    //kodun tanımı: Add metodunu doğrula ProductValidator'daki kurallara göre
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product)  /* örneğin bu metodun hem başarılı bir şekilde gerçekleşip gerçekleşmediğini hem de
                                              bu olayın sonucunun bize verildiğini nasıl yazarız? encapsulation ile. çünkü void
                                              tek bir metod döndürür ikinciyi döndürmez bunu önlemek içinde kapsülleme yapacağız. */
         {
-            if(product.ProductName.Length < 2)       //isim uzunluğu, birim fiyatı gibi kurallar CRUD metotlara yazılır.
+            IResult result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName), 
+                CheckIfProductCountOfCategoryCorrect(product.CategoryId), 
+                CheckIfCategoryLimitExceded());
+
+            if (result != null)    //result, kurala uymayan bir durum varsa return result döndür
             {
-                //returndan önce buraya iş kodları yazılır
-                //magic strings: stringleri ayrı ayrı yazmak (Messages classı oluşturduk)
-                return new ErrorResult(Messages.ProductNameInvalid);
+                return result;
             }
 
             _productDal.Add(product);
-
             return new SuccessResult(Messages.ProductAdded);  /* eğer bu şekilde yazmasaydık Result result = new Result()   result.bir şeyler
                                                               vs. yazacaktık ama constructor ile bu parametreleri direkt yazabiliriz.
                                                               başarı dönüşümlerini constructor ile kodladık(constructor, result sekmesinde) */
+             
         }
 
+
+        [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]
+        public IResult Update(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        [CacheAspect]       
         public IDataResult<List<Product>> GetAll()
         {
             if (DateTime.Now.Hour == 1)
@@ -61,6 +88,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p=>p.CategoryId==id));
         }
 
+        [CacheAspect]
+        [PerformanceAspect(5)]      
         public IDataResult<Product> GetById(int productId)
         {
             return new SuccessDataResult<Product>(_productDal.Get(p=>p.ProductId == productId));
@@ -74,6 +103,43 @@ namespace Business.Concrete
         public IDataResult<List<ProductDetailDto>> GetProductDetails()
         {
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());  //IProductDal'daki Details'i bana ver
+        }
+        
+
+        private IResult CheckIfProductCountOfCategoryCorrect(int categoryId)
+        {
+            var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count;
+            if (result >= 15)
+            {
+                return new ErrorResult(Messages.ProductCountOfCategoryError);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfProductNameExists(string productName)
+        {
+            var result = _productDal.GetAll(p => p.ProductName == productName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.ProductNameAlreadyExists);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfCategoryLimitExceded()     //eğer mevcut kategori sayısı 15'i geçtiyse sisteme yeni ürün ekleme.
+        {
+            var result = _categoryService.GetAll();
+            if (result.Data.Count > 15)
+            {
+                return new ErrorResult(Messages.CategoryLimitExceded);
+            }
+            return new SuccessResult();
+        }
+
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Product product)
+        {
+            throw new NotImplementedException();
         }
     }
 }
